@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "527619297484",
+    "project_id": "cliploops-000",
+    "storage_bucket": "cliploops-000.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:527619297484:android:81a94e54c6fc0beb0cb269",
+        "android_client_info": {
+          "package_name": "com.example.cliploops"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCqVv7Ip3xtogSKul9T_4oo6Ql062AtHnk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
