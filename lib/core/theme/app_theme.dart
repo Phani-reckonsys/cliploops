@@ -10,6 +10,7 @@ class AppTheme {
     brightness: Brightness.light,
     colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple, brightness: Brightness.light),
     scaffoldBackgroundColor: Colors.white,
+    fontFamily: 'GT Walsheim Trial', 
 
     appBarTheme: const AppBarTheme(
       backgroundColor: Colors.white,
@@ -24,6 +25,7 @@ class AppTheme {
     brightness: Brightness.dark,
     colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple, brightness: Brightness.dark),
     scaffoldBackgroundColor: Colors.black,
+    fontFamily: 'GT Walsheim Trial', 
 
     appBarTheme: const AppBarTheme(
       backgroundColor: Colors.black,
