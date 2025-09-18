@@ -69,6 +69,7 @@ flutter:
     - assets/top-background-2.svg
     - assets/top-background-2.png
     - assets/fonts/
+    - assets/covers/
 
 
   # An image asset can refer to one or more resolution-specific "variants", see
