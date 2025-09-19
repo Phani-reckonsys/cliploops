@@ -1,4 +1,8 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
+import 'package:cliploops/features/product/custom_bottom_navbar.dart';
+import 'package:liquid_glass_renderer/liquid_glass_renderer.dart';
 
 // --- DATA MODELS (remain the same) ---
 class Album {
@@ -75,7 +79,6 @@ class _HomeScreenState extends State<HomeScreen> {
     Song(title: 'Echoes of Tomorrow', artist: 'Artist Name'),
     Song(title: 'Whispers in the Wind', artist: 'Artist Name'),
   ];
-  // ------------------
 
   // --- WIDGET BUILDERS (remain the same) ---
   Widget _buildAlbumCard(Album album) {
@@ -201,123 +204,6 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
-  // -----------------------
-
-  // --- NEW: CUSTOM BOTTOM NAVIGATION BAR WIDGET ---
-  // --- NEW: CUSTOM BOTTOM NAVIGATION BAR WIDGET ---
-  Widget _buildCustomBottomNavBar() {
-    // Helper to build each individual item (this function does not change)
-    Widget buildNavItem(
-      IconData selectedIcon,
-      IconData unselectedIcon,
-      String label,
-      int index,
-    ) {
-      // ... same as before
-      final bool isSelected = _bottomNavIndex == index;
-      final Color color = isSelected ? Colors.red : Colors.grey;
-
-      return Expanded(
-        child: InkWell(
-          onTap: () {
-            setState(() {
-              _bottomNavIndex = index;
-            });
-          },
-          child: Container(
-            decoration: BoxDecoration(
-              border: Border(
-                left: BorderSide(
-                  color: index == 0
-                      ? Colors.transparent
-                      : Colors.grey.withAlpha(10),
-                  width: 1.0,
-                ),
-              ),
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  isSelected ? selectedIcon : unselectedIcon,
-                  color: color,
-                  size: 28,
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  label,
-                  style: TextStyle(
-                    color: color,
-                    fontWeight: isSelected
-                        ? FontWeight.bold
-                        : FontWeight.normal,
-                    fontSize: 12,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      );
-    }
-
-    return Container(
-      // This is the main container for the nav bar background
-      height: 80,
-      color: const Color(0xFF1C1C1C),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          // 1. THE GRADIENT LINE WIDGET
-          Container(
-            height: 1, // The thickness of the line
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                // The gradient goes from left to right
-                begin: Alignment.centerLeft,
-                end: Alignment.centerRight,
-                // The colors go from transparent, to red in the middle, and back to transparent
-                colors: [
-                  Colors.transparent,
-                  Colors.red.withOpacity(0.8),
-                  Colors.red,
-                  Colors.red.withOpacity(0.8),
-                  Colors.transparent,
-                ],
-                // Stops control where the colors are placed along the gradient
-                stops: const [0.0, 0.3, 0.5, 0.7, 1.0],
-              ),
-            ),
-          ),
-
-          // 2. THE ROW OF NAVIGATION ITEMS
-          // Expanded ensures the Row takes up the rest of the vertical space
-          Expanded(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                buildNavItem(Icons.home, Icons.home_outlined, 'Home', 0),
-                buildNavItem(
-                  Icons.music_note,
-                  Icons.music_note_outlined,
-                  'Playlist',
-                  1,
-                ),
-                buildNavItem(
-                  Icons.headphones,
-                  Icons.headphones_outlined,
-                  'All Songs',
-                  2,
-                ),
-                buildNavItem(Icons.album, Icons.album_outlined, 'Albums', 3),
-                buildNavItem(Icons.folder, Icons.folder_outlined, 'Folders', 4),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -438,9 +324,7 @@ class _HomeScreenState extends State<HomeScreen> {
               const SliverToBoxAdapter(child: SizedBox(height: 100)),
             ],
           ),
-
-          // --- REPLACED with custom widget ---
-          bottomNavigationBar: _buildCustomBottomNavBar(),
+          bottomNavigationBar: CustomBottomNavbar(),
         ),
       ],
     );
