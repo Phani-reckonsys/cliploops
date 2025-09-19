@@ -31,33 +31,40 @@ class _PlaylistScreenState extends State<PlaylistScreen> {
   // A list of playlist items to display on the screen
   final List<PlaylistItem> _playlists = [
     PlaylistItem(
-        imagePath: 'assets/covers/cover1.png',
-        title: 'Bollywood Songs',
-        songCount: 12),
+      imagePath: 'assets/covers/cover1.png',
+      title: 'Bollywood Songs',
+      songCount: 12,
+    ),
     PlaylistItem(
-        imagePath: 'assets/covers/cover2.png',
-        title: 'Workout Playlist',
-        songCount: 12),
+      imagePath: 'assets/covers/cover2.png',
+      title: 'Workout Playlist',
+      songCount: 12,
+    ),
     PlaylistItem(
-        imagePath: 'assets/covers/cover3.png',
-        title: 'Hollywood',
-        songCount: 12),
+      imagePath: 'assets/covers/cover3.png',
+      title: 'Hollywood',
+      songCount: 12,
+    ),
     PlaylistItem(
-        imagePath: 'assets/covers/cover4.png',
-        title: 'Arjun Singh',
-        songCount: 12),
+      imagePath: 'assets/covers/cover4.png',
+      title: 'Arjun Singh',
+      songCount: 12,
+    ),
     PlaylistItem(
-        imagePath: 'assets/covers/cover5.png',
-        title: 'Favourites',
-        songCount: 12),
+      imagePath: 'assets/covers/cover5.png',
+      title: 'Favourites',
+      songCount: 12,
+    ),
     PlaylistItem(
-        imagePath: 'assets/covers/cover6.png',
-        title: 'Road Trip Mix',
-        songCount: 25),
+      imagePath: 'assets/covers/cover6.png',
+      title: 'Road Trip Mix',
+      songCount: 25,
+    ),
     PlaylistItem(
-        imagePath: 'assets/covers/cover7.png',
-        title: 'Focus & Study',
-        songCount: 18),
+      imagePath: 'assets/covers/cover7.png',
+      title: 'Focus & Study',
+      songCount: 18,
+    ),
   ];
 
   // --- WIDGET BUILDERS ---
@@ -91,7 +98,10 @@ class _PlaylistScreenState extends State<PlaylistScreen> {
   /// Builds a single row in the playlist.
   Widget _buildPlaylistItem(PlaylistItem item) {
     return ListTile(
-      contentPadding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+      contentPadding: const EdgeInsets.symmetric(
+        horizontal: 16.0,
+        vertical: 8.0,
+      ),
       leading: ClipRRect(
         borderRadius: BorderRadius.circular(8.0),
         child: Image.asset(
@@ -133,90 +143,92 @@ class _PlaylistScreenState extends State<PlaylistScreen> {
   @override
   Widget build(BuildContext context) {
     // Using the same background stack from your HomeScreen for consistency
-    return Stack(
-      children: [
-        Positioned(
-          top: -200,
-          left: -200,
-          width: 800,
-          child: Image.asset('assets/top-background-2.png', fit: BoxFit.cover),
-        ),
-        Scaffold(
-          backgroundColor: Colors.transparent,
-          appBar: AppBar(
-            backgroundColor: Colors.transparent,
-            elevation: 0,
-            leading: IconButton(
-              icon: const Icon(Icons.arrow_back, color: Colors.white),
-              onPressed: () => Navigator.of(context).pop(),
-            ),
-            title: const Text(
-              'Playlist',
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-                fontSize: 24,
-              ),
-            ),
+    return Scaffold(
+      backgroundColor: Colors.transparent,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        // leading: IconButton(
+        //   icon: const Icon(Icons.arrow_back, color: Colors.white),
+        //   onPressed: () => Navigator.of(context).pop(),
+        // ),
+        automaticallyImplyLeading: false,
+        title: const Text(
+          'Playlist',
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+            fontSize: 24,
           ),
-          body: Column(
-            children: [
-              // --- FILTER CHIPS ---
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0),
-                child: Row(
-                  children: [
-                    _buildFilterChip('All'),
-                    const SizedBox(width: 8),
-                    _buildFilterChip('Favourites'),
-                    const SizedBox(width: 8),
-                    _buildFilterChip('Most played'),
-                    const Spacer(),
-                    IconButton(
-                      icon: const Icon(Icons.filter_list, color: Colors.white),
-                      onPressed: () {
-                        // Handle filter tap
-                      },
-                    ),
-                  ],
-                ),
-              ),
-
-              // --- SEARCH BAR ---
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
-                child: TextField(
-                  style: const TextStyle(color: Colors.white),
-                  decoration: InputDecoration(
-                    hintText: 'Search your music',
-                    hintStyle: TextStyle(color: Colors.white.withOpacity(0.5)),
-                    prefixIcon: Icon(Icons.search, color: Colors.white.withOpacity(0.5)),
-                    suffixIcon: Icon(Icons.mic, color: Colors.white.withOpacity(0.5)),
-                    filled: true,
-                    fillColor: Colors.white.withOpacity(0.1),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(30.0),
-                      borderSide: BorderSide.none,
-                    ),
-                  ),
-                ),
-              ),
-
-              // --- PLAYLIST ---
-              Expanded(
-                child: ListView.builder(
-                  itemCount: _playlists.length,
-                  itemBuilder: (context, index) {
-                    return _buildPlaylistItem(_playlists[index]);
+        ),
+      ),
+      body: Column(
+        children: [
+          // --- FILTER CHIPS ---
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 16.0,
+              vertical: 10.0,
+            ),
+            child: Row(
+              children: [
+                _buildFilterChip('All'),
+                const SizedBox(width: 8),
+                _buildFilterChip('Favourites'),
+                const SizedBox(width: 8),
+                _buildFilterChip('Most played'),
+                const Spacer(),
+                IconButton(
+                  icon: const Icon(Icons.filter_list, color: Colors.white),
+                  onPressed: () {
+                    // Handle filter tap
                   },
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-          // Using the same custom bottom navbar from your home screen
-          bottomNavigationBar: const CustomBottomNavbar(),
-        ),
-      ],
+
+          // --- SEARCH BAR ---
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 16.0,
+              vertical: 12.0,
+            ),
+            child: TextField(
+              style: const TextStyle(color: Colors.white),
+              decoration: InputDecoration(
+                hintText: 'Search your music',
+                hintStyle: TextStyle(color: Colors.white.withOpacity(0.5)),
+                prefixIcon: Icon(
+                  Icons.search,
+                  color: Colors.white.withOpacity(0.5),
+                ),
+                suffixIcon: Icon(
+                  Icons.mic,
+                  color: Colors.white.withOpacity(0.5),
+                ),
+                filled: true,
+                fillColor: Colors.white.withOpacity(0.1),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(30.0),
+                  borderSide: BorderSide.none,
+                ),
+              ),
+            ),
+          ),
+
+          // --- PLAYLIST ---
+          Expanded(
+            child: ListView.builder(
+              itemCount: _playlists.length,
+              itemBuilder: (context, index) {
+                return _buildPlaylistItem(_playlists[index]);
+              },
+            ),
+          ),
+        ],
+      ),
+      // Using the same custom bottom navbar from your home scree
     );
   }
 }

@@ -207,126 +207,110 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Positioned(
-          top: -200,
-          left: -200,
-          width: 800,
-          child: Image.asset('assets/top-background-2.png', fit: BoxFit.cover),
-        ),
-        Scaffold(
-          backgroundColor: Colors.transparent,
-          appBar: AppBar(
-            backgroundColor: Colors.transparent,
-            elevation: 0,
-            title: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              child: Row(
-                children: const [
-                  CircleAvatar(
-                    radius: 22,
-                    backgroundImage: AssetImage("assets/dummy-avatar.png"),
-                  ),
-                  SizedBox(width: 12),
-                  Text(
-                    "Hello, Harsh",
-                    style: TextStyle(
-                      shadows: [Shadow(blurRadius: 4, color: Colors.black54)],
-                      fontSize: 24,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                ],
+    return Scaffold(
+      backgroundColor: Colors.transparent,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        title: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          child: Row(
+            children: const [
+              CircleAvatar(
+                radius: 22,
+                backgroundImage: AssetImage("assets/dummy-avatar.png"),
               ),
-            ),
-          ),
-          // --- BODY (remains the same) ---
-          body: CustomScrollView(
-            slivers: [
-              SliverToBoxAdapter(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Padding(
-                      padding: EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 8.0),
-                      child: Text(
-                        "Quick Picks",
-                        style: TextStyle(
-                          fontSize: 22,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                          shadows: [
-                            Shadow(blurRadius: 4, color: Colors.black54),
-                          ],
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 450,
-                      child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                        itemCount: (_quickPicks.length / 2).ceil(),
-                        itemBuilder: (context, index) {
-                          return Column(
-                            children: [
-                              _buildAlbumCard(_quickPicks[index * 2]),
-                              if (index * 2 + 1 < _quickPicks.length)
-                                _buildAlbumCard(_quickPicks[index * 2 + 1]),
-                            ],
-                          );
-                        },
-                      ),
-                    ),
-                  ],
+              SizedBox(width: 12),
+              Text(
+                "Hello, Harsh",
+                style: TextStyle(
+                  shadows: [Shadow(blurRadius: 4, color: Colors.black54)],
+                  fontSize: 24,
+                  fontWeight: FontWeight.w700,
                 ),
               ),
-
-              SliverToBoxAdapter(
-                child: _buildSectionHeader("Playlist", onTap: () {}),
-              ),
-              SliverList(
-                delegate: SliverChildBuilderDelegate((context, index) {
-                  final song = _playlist[index];
-                  return ListTile(
-                    leading: const Icon(
-                      Icons.music_note,
-                      color: Colors.white70,
+            ],
+          ),
+        ),
+      ),
+      // --- BODY (remains the same) ---
+      body: CustomScrollView(
+        slivers: [
+          SliverToBoxAdapter(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Padding(
+                  padding: EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 8.0),
+                  child: Text(
+                    "Quick Picks",
+                    style: TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                      shadows: [Shadow(blurRadius: 4, color: Colors.black54)],
                     ),
-                    title: Text(
-                      song.title,
-                      style: const TextStyle(color: Colors.white),
-                    ),
-                    subtitle: Text(
-                      song.artist,
-                      style: TextStyle(color: Colors.white.withOpacity(0.7)),
-                    ),
-                  );
-                }, childCount: _playlist.length),
-              ),
-
-              SliverToBoxAdapter(child: _buildSectionHeader("Albums")),
-              SliverToBoxAdapter(
-                child: SizedBox(
-                  height: 160,
+                  ),
+                ),
+                SizedBox(
+                  height: 450,
                   child: ListView.builder(
                     scrollDirection: Axis.horizontal,
-                    padding: const EdgeInsets.symmetric(horizontal: 8),
-                    itemCount: 4,
+                    padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                    itemCount: (_quickPicks.length / 2).ceil(),
                     itemBuilder: (context, index) {
-                      return _buildSquareAlbumCard(_quickPicks[index]);
+                      return Column(
+                        children: [
+                          _buildAlbumCard(_quickPicks[index * 2]),
+                          if (index * 2 + 1 < _quickPicks.length)
+                            _buildAlbumCard(_quickPicks[index * 2 + 1]),
+                        ],
+                      );
                     },
                   ),
                 ),
-              ),
-
-              const SliverToBoxAdapter(child: SizedBox(height: 100)),
-            ],
+              ],
+            ),
           ),
-          bottomNavigationBar: CustomBottomNavbar(),
-        ),
-      ],
+
+          SliverToBoxAdapter(
+            child: _buildSectionHeader("Playlist", onTap: () {}),
+          ),
+          SliverList(
+            delegate: SliverChildBuilderDelegate((context, index) {
+              final song = _playlist[index];
+              return ListTile(
+                leading: const Icon(Icons.music_note, color: Colors.white70),
+                title: Text(
+                  song.title,
+                  style: const TextStyle(color: Colors.white),
+                ),
+                subtitle: Text(
+                  song.artist,
+                  style: TextStyle(color: Colors.white.withOpacity(0.7)),
+                ),
+              );
+            }, childCount: _playlist.length),
+          ),
+
+          SliverToBoxAdapter(child: _buildSectionHeader("Albums")),
+          SliverToBoxAdapter(
+            child: SizedBox(
+              height: 160,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                itemCount: 4,
+                itemBuilder: (context, index) {
+                  return _buildSquareAlbumCard(_quickPicks[index]);
+                },
+              ),
+            ),
+          ),
+
+          const SliverToBoxAdapter(child: SizedBox(height: 100)),
+        ],
+      ),
     );
   }
 }

@@ -1,63 +1,34 @@
+// lib/features/product/custom_bottom_navbar.dart (Updated)
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart'; // Import GoRouter
+import 'package:go_router/go_router.dart';
 
 class CustomBottomNavbar extends StatelessWidget {
-  const CustomBottomNavbar({super.key});
+  final StatefulNavigationShell navigationShell;
 
-  // Helper method to determine the selected index based on the current route
-  int _calculateSelectedIndex(BuildContext context) {
-    final String location = GoRouterState.of(context).uri.toString();
-    if (location == '/playlist') {
-      return 1;
-    }
-    // TODO: Add cases for other routes when you create them
-    // if (location == '/all-songs') {
-    //   return 2;
-    // }
-    // if (location == '/albums') {
-    //   return 3;
-    // }
-    // if (location == '/folders') {
-    //   return 4;
-    // }
-    // Default to the Home screen
-    return 0;
-  }
+  const CustomBottomNavbar({super.key, required this.navigationShell});
 
-  // Helper method to handle navigation when an item is tapped
-  void _onItemTapped(int index, BuildContext context) {
-    switch (index) {
-      case 0:
-        context.go('/');
-        break;
-      case 1:
-        context.go('/playlist');
-        break;
-      // TODO: Add navigation for other items
-      // case 2:
-      //   context.go('/all-songs');
-      //   break;
-      // case 3:
-      //   context.go('/albums');
-      //   break;
-      // case 4:
-      //   context.go('/folders');
-      //   break;
-    }
+  void _onItemTapped(int index) {
+    // Use the navigationShell to switch tabs
+    navigationShell.goBranch(
+      index,
+      // navigate to the initial location of the branch if we're already on that tab
+      initialLocation: index == navigationShell.currentIndex,
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    // Get the currently selected index from the route
-    final int currentIndex = _calculateSelectedIndex(context);
+    // The current index comes directly from the navigationShell
+    final int currentIndex = navigationShell.currentIndex;
 
     return Container(
-      height: 80,
+      height: 85,
+      padding: const EdgeInsets.only(bottom: 10),
       color: const Color(0xFF1C1C1C),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          // 1. THE GRADIENT LINE WIDGET (no changes here)
+          // Gradient line remains the same
           Container(
             height: 1,
             decoration: BoxDecoration(
@@ -75,16 +46,45 @@ class CustomBottomNavbar extends StatelessWidget {
               ),
             ),
           ),
-          // 2. THE ROW OF NAVIGATION ITEMS
           Expanded(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                _buildNavItem(context, currentIndex, Icons.home, Icons.home_outlined, 'Home', 0),
-                _buildNavItem(context, currentIndex, Icons.music_note, Icons.music_note_outlined, 'Playlist', 1),
-                _buildNavItem(context, currentIndex, Icons.headphones, Icons.headphones_outlined, 'All Songs', 2),
-                _buildNavItem(context, currentIndex, Icons.album, Icons.album_outlined, 'Albums', 3),
-                _buildNavItem(context, currentIndex, Icons.folder, Icons.folder_outlined, 'Folders', 4),
+                _buildNavItem(
+                  currentIndex,
+                  Icons.home,
+                  Icons.home_outlined,
+                  'Home',
+                  0,
+                ),
+                _buildNavItem(
+                  currentIndex,
+                  Icons.music_note,
+                  Icons.music_note_outlined,
+                  'Playlist',
+                  1,
+                ),
+                _buildNavItem(
+                  currentIndex,
+                  Icons.headphones,
+                  Icons.headphones_outlined,
+                  'All Songs',
+                  2,
+                ),
+                _buildNavItem(
+                  currentIndex,
+                  Icons.album,
+                  Icons.album_outlined,
+                  'Albums',
+                  3,
+                ),
+                _buildNavItem(
+                  currentIndex,
+                  Icons.folder,
+                  Icons.folder_outlined,
+                  'Folders',
+                  4,
+                ),
               ],
             ),
           ),
@@ -93,9 +93,7 @@ class CustomBottomNavbar extends StatelessWidget {
     );
   }
 
-  // This is now a regular method, not part of a State class
   Widget _buildNavItem(
-    BuildContext context,
     int currentIndex,
     IconData selectedIcon,
     IconData unselectedIcon,
@@ -107,20 +105,11 @@ class CustomBottomNavbar extends StatelessWidget {
 
     return Expanded(
       child: InkWell(
-        // Use the navigation helper on tap
-        onTap: () => _onItemTapped(index, context),
-        // Removes the splash effect for a cleaner look
+        onTap: () => _onItemTapped(index),
         splashColor: Colors.transparent,
         highlightColor: Colors.transparent,
         child: Container(
-          decoration: BoxDecoration(
-            border: Border(
-              left: BorderSide(
-                color: index == 0 ? Colors.transparent : Colors.grey.withAlpha(10),
-                width: 1.0,
-              ),
-            ),
-          ),
+          // ... rest of the styling is the same
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
