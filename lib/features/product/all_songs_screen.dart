@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:on_audio_query_new/on_audio_query.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'player_screen.dart'; // Make sure the path is correct
 
 // --- SCREEN WIDGET ---
 class AllSongsScreen extends StatefulWidget {
@@ -202,6 +203,9 @@ class _AllSongsScreenState extends State<AllSongsScreen> {
 }
 
 // --- MINI PLAYER WIDGET ---
+// In AllSongsScreen.dart
+
+// --- MINI PLAYER WIDGET ---
 class MiniPlayer extends StatelessWidget {
   final AudioPlayer audioPlayer;
 
@@ -216,22 +220,33 @@ class MiniPlayer extends StatelessWidget {
         if (state?.currentSource == null) return const SizedBox.shrink();
         final metadata = state!.currentSource!.tag as SongModel;
 
-        return Container(
-          decoration: BoxDecoration(
-            color: Colors.grey[850],
-            border: const Border(top: BorderSide(color: Colors.black, width: 1.0)),
-          ),
-          child: ListTile(
-            leading: QueryArtworkWidget(
-              id: metadata.id,
-              type: ArtworkType.AUDIO,
-              artworkFit: BoxFit.cover,
-              artworkBorder: BorderRadius.circular(4.0),
-              nullArtworkWidget: const Icon(Icons.music_note, color: Colors.white),
+        return GestureDetector( // <-- WRAP WITH GESTURE DETECTOR
+          onTap: () {
+            // Navigate to the full player screen
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => PlayerScreen(audioPlayer: audioPlayer),
+              ),
+            );
+          },
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.grey[850],
+              border: const Border(top: BorderSide(color: Colors.black, width: 1.0)),
             ),
-            title: Text(metadata.title, style: const TextStyle(color: Colors.white), maxLines: 1, overflow: TextOverflow.ellipsis),
-            subtitle: Text(metadata.artist ?? "Unknown Artist", style: TextStyle(color: Colors.white.withOpacity(0.7)), maxLines: 1, overflow: TextOverflow.ellipsis),
-            trailing: _buildControls(),
+            child: ListTile(
+              leading: QueryArtworkWidget(
+                id: metadata.id,
+                type: ArtworkType.AUDIO,
+                artworkFit: BoxFit.cover,
+                artworkBorder: BorderRadius.circular(4.0),
+                nullArtworkWidget: const Icon(Icons.music_note, color: Colors.white),
+              ),
+              title: Text(metadata.title, style: const TextStyle(color: Colors.white), maxLines: 1, overflow: TextOverflow.ellipsis),
+              subtitle: Text(metadata.artist ?? "Unknown Artist", style: TextStyle(color: Colors.white.withOpacity(0.7)), maxLines: 1, overflow: TextOverflow.ellipsis),
+              trailing: _buildControls(),
+            ),
           ),
         );
       },

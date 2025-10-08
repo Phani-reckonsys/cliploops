@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:cliploops/features/product/custom_bottom_navbar.dart'; // Assuming this is the correct path
+// Assuming this is the correct path
 
 // --- DATA MODEL ---
 // A simple class to hold data for each playlist item

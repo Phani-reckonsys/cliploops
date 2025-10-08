@@ -28,7 +28,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   // --- STATE VARIABLES ---
-  int _bottomNavIndex = 0; // For BottomNavigationBar
+  final int _bottomNavIndex = 0; // For BottomNavigationBar
   // -----------------------
 
   // --- MOCK DATA (remains the same) ---
